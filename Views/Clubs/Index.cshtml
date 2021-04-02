@@ -1,0 +1,102 @@
+﻿@model IEnumerable<WebApplication1.Models.ClubsModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClubID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClubName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Advisor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdvisorEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PresName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PresEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descriptions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClubID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClubName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeetingDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeetLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Advisor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdvisorEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PresName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PresEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descriptions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /*id = item.Id */})|
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
