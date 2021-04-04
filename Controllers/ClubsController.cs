@@ -51,10 +51,19 @@ namespace WebApplication1.Controllers
 
             ClubsDAO clubsDAO = new ClubsDAO();
 
-            clubsDAO.Create(newClub);
+            clubsDAO.CreateOrUpdate(newClub);
 
             return View("Details", newClub);
             
+        }
+
+        public ActionResult Edit(int Id)
+        {
+            ClubsDAO clubsDAO = new ClubsDAO();
+
+            ClubsModel clubs = clubsDAO.FetchOne(Id);
+            
+            return View("ClubForm", clubs);
         }
     }
 }
