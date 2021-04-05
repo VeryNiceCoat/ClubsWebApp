@@ -65,5 +65,39 @@ namespace WebApplication1.Controllers
             
             return View("ClubForm", clubs);
         }
+
+        public ActionResult Delete(int Id)
+        {
+            ClubsDAO clubsDAO = new ClubsDAO();
+
+            clubsDAO.Delete(Id);
+
+            List<ClubsModel> clubs = clubsDAO.FetchAll();
+
+            return View("Index", clubs);
+        }
+
+        public ActionResult SearchForm()
+        {
+            return View("SearchForm");
+        }
+
+        public ActionResult SearchForName(string searchPhrase)
+        {
+            ClubsDAO clubsDAO = new ClubsDAO();
+
+            List<ClubsModel> searchResults = clubsDAO.SearchForName(searchPhrase);
+
+            return View("Index", searchResults);
+        }
+
+        public ActionResult SearchForDescription(string searchPhrase)
+        {
+            ClubsDAO clubsDAO = new ClubsDAO();
+
+            List<ClubsModel> searchResults = clubsDAO.SearchForDescription(searchPhrase);
+
+            return View("Index", searchResults);
+        }
     }
 }

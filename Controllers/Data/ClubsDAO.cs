@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebApplication1.Models;
 using System.Data.SqlClient;
+using System;
 
 namespace WebApplication1.Data
 {
@@ -24,6 +25,111 @@ namespace WebApplication1.Data
                 if (reader.HasRows)
                 {
                     while(reader.Read())
+                    {
+                        //create a new club object. Add it to the list to return.
+                        ClubsModel clubs = new ClubsModel();
+                        clubs.ClubID = reader.GetInt32(0);
+                        clubs.ClubName = reader.GetString(1);
+                        clubs.MeetingDay = reader.GetString(2);
+                        clubs.MeetLink = reader.GetString(3);
+                        clubs.StartTime = reader.GetTimeSpan(4);
+                        clubs.EndTime = reader.GetTimeSpan(5);
+                        clubs.Advisor = reader.GetString(6);
+                        clubs.AdvisorEmail = reader.GetString(7);
+                        clubs.PresName = reader.GetString(8);
+                        clubs.PresEmail = reader.GetString(9);
+                        clubs.Descriptions = reader.GetString(10);
+                        clubs.RoomNo = reader.GetInt32(11);
+
+                        returnList.Add(clubs);
+                    }
+                }
+            }
+
+            return returnList;
+        }
+
+        internal int Delete(int id)
+        {
+            //access the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery  = "DELETE FROM dbo.ClubDetails WHERE ClubID = @ClubID";
+                //associate @id with Id parameter
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@ClubID", System.Data.SqlDbType.VarChar, 1000).Value = id;
+
+                connection.Open();
+                int deletedID = command.ExecuteNonQuery();
+
+                ClubsModel clubs = new ClubsModel();
+
+                return deletedID;
+            }
+        }
+
+        internal List<ClubsModel> SearchForDescription(string searchPhrase)
+        {
+            List<ClubsModel> returnList = new List<ClubsModel>();
+            //access the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "SELECT * FROM dbo.ClubDetails WHERE Descriptions LIKE @searchForMe";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@searchForMe", System.Data.SqlDbType.NVarChar).Value = "%" + searchPhrase + "%";
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        //create a new club object. Add it to the list to return.
+                        ClubsModel clubs = new ClubsModel();
+                        clubs.ClubID = reader.GetInt32(0);
+                        clubs.ClubName = reader.GetString(1);
+                        clubs.MeetingDay = reader.GetString(2);
+                        clubs.MeetLink = reader.GetString(3);
+                        clubs.StartTime = reader.GetTimeSpan(4);
+                        clubs.EndTime = reader.GetTimeSpan(5);
+                        clubs.Advisor = reader.GetString(6);
+                        clubs.AdvisorEmail = reader.GetString(7);
+                        clubs.PresName = reader.GetString(8);
+                        clubs.PresEmail = reader.GetString(9);
+                        clubs.Descriptions = reader.GetString(10);
+                        clubs.RoomNo = reader.GetInt32(11);
+
+                        returnList.Add(clubs);
+                    }
+                }
+            }
+
+            return returnList;
+        }
+
+        internal List<ClubsModel> SearchForName(string searchPhrase)
+        {
+            List<ClubsModel> returnList = new List<ClubsModel>();
+            //access the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "SELECT * FROM dbo.ClubDetails WHERE ClubName LIKE @searchForMe";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@searchForMe", System.Data.SqlDbType.NVarChar).Value = "%" + searchPhrase + "%";
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
                     {
                         //create a new club object. Add it to the list to return.
                         ClubsModel clubs = new ClubsModel();
