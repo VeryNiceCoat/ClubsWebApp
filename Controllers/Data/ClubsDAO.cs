@@ -201,19 +201,19 @@ namespace WebApplication1.Data
             {
                 string sqlQuery = "";
 
-                if (clubModel.ClubID <= 0)
+                if (clubModel.ClubID > 1)
                 {
-                    sqlQuery = "INSERT INTO dbo.ClubDetails Values(@ClubName, @MeetingDay, @MeetLink, @StartTime, @EndTime, @Advisor, @AdvisorEmail, @PresName, @PresEmail, @Descriptions, @RoomNo)";
+                    sqlQuery = "UPDATE dbo.ClubDetails SET ClubName = @ClubName, MeetingDay = @MeetingDay, MeetLink = @MeetLink,StartTime = @StartTime, EndTime = @EndTime, Advisor = @Advisor, AdvisorEmail = @AdvisorEmail, PresName = @PresName, PresEmail = @PresEmail, Descriptions = @Descriptions, RoomNo = @RoomNo WHERE ClubID = @ClubID";
+
                 }
                 else
                 {
-                    //update
-                     sqlQuery = "UPDATE dbo.ClubDetails SET ClubName = @ClubName, MeetingDay = @MeetingDay, MeetLink = @MeetLink,StartTime = @StartTime, EndTime = @EndTime, Advisor = @Advisor, AdvisorEmail = @AdvisorEmail, PresName = @PresName, PresEmail = @PresEmail, Descriptions = @Descriptions, RoomNo = @RoomNo WHERE ClubID = @ClubID";
+                    //create
+                    sqlQuery = "INSERT INTO dbo.ClubDetails Values(@ClubName, @MeetingDay, @MeetLink, @StartTime, @EndTime, @Advisor, @AdvisorEmail, @PresName, @PresEmail, @Descriptions, @RoomNo)";
                 }
                 //associate @id with Id parameter
 
                 SqlCommand command = new SqlCommand(sqlQuery, connection);
-
                 command.Parameters.Add("@ClubID", System.Data.SqlDbType.VarChar, 1000).Value = clubModel.ClubID;
                 command.Parameters.Add("@ClubName", System.Data.SqlDbType.VarChar, 1000).Value = clubModel.ClubName;
                 command.Parameters.Add("@MeetingDay", System.Data.SqlDbType.VarChar, 1000).Value = clubModel.MeetingDay;
